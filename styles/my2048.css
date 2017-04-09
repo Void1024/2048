@@ -1,0 +1,45 @@
+body{
+	background-color: #E0FFFF;
+}
+
+footer p {
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    color: #776e65;
+}
+
+a {
+    color:#776e65 ;
+}
+
+.game {
+    margin:10px auto;
+    padding:5px;
+    border: double 2px #776e65;
+    width:450px;
+    background-color: rgba(238, 228, 218, 0.84902);
+    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    color: #776e65;
+}
+
+.game h1 {
+    font-size: 50px;
+}
+
+.game h2 {
+    font-size: 40px;
+}
+
+.game h3 {
+    font-size: 20px;
+}
+
+#text {
+    float: left;
+}
+
+.clear {
+    clear:both;
+}
