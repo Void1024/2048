@@ -23,7 +23,7 @@
 			var set=false;
 			var keyUp='W',keyDown='S',keyLeft='A',keyRight='D';
 			var setW=false,setA=false,setD=false,setS=false;
-
+			var startX,startY,endX,endY;
 			{
 				var textHeight=scoreText.canvas.height;
 				var textWidth=scoreText.canvas.width;
@@ -97,66 +97,28 @@
     			key=[keyUp,keyDown,keyLeft,keyRight].indexOf(keychar)
     			if(key > -1&&end==false&&main==false)
     			{
-        			var arr=new Array();
         			if(key===0)
         			{
-        				//alert('W');
-        				for(let n=0;n<4;n++)
-        				{
-        					for(let i=0;i<4;i++)
-        						arr[i]=array[n][3-i];
-        					arr=mergeBlock(arr);
-        					for(let i=0;i<4;i++)
-        						array[n][3-i]=arr[i];
-        				}
+        				moveUp();
         				
         			}
         			else if(key===1)
         			{
-        				//alert('S');
-        				for(let n=0;n<4;n++)
-        				{
-        					for(let i=0;i<4;i++)
-        						arr[i]=array[n][i];
-        					arr=mergeBlock(arr);
-        					for(let i=0;i<4;i++)
-        						array[n][i]=arr[i];
-        				}
+        				moveDown();
         				
         			}
         			else if(key===2)
         			{
-        				//alert('A');
-        				for(let n=0;n<4;n++)
-        				{
-        					for(let i=0;i<4;i++)
-        						arr[i]=array[3-i][n];
-        					arr=mergeBlock(arr);
-        					for(let i=0;i<4;i++)
-        						array[3-i][n]=arr[i];
-        				}
+        				moveLeft();
         				
         			}
         			else if(key===3)
         			{
-        				//alert('D');
-        				for(let n=0;n<4;n++)
-        				{
-        					for(let i=0;i<4;i++)
-        						arr[i]=array[i][n];
-        					arr=mergeBlock(arr);
-        					for(let i=0;i<4;i++)
-        						array[i][n]=arr[i];
-        				}
+        				moveRight();
         				
         			}
         			
-        			if(lastArray!==array.toString())
-        			{
-        				
-        				randomBlock();
-        				step++;
-        			}
+        			
         			context.clearRect(0,0,width,height);
         			scoreText.clearRect(0,0,scoreText.canvas.width,scoreText.canvas.height)
         			gameDraw();
@@ -282,12 +244,133 @@
    				
    			}
 
+			document.addEventListener('touchstart',function(event)
+   			{
+   				startX=event.touches[0].pageX;
+   				startY=event.touches[0].pageY;
+   			});
+   			
+   			document.addEventListener('touchend',function(event)
+   			{
+   				endX=event.changedTouches[0].pageX;
+   				endY=event.changedTouches[0].pageY;
+   				lastArray=array.toString();
+   				var changeX=endX-startX;
+   				var changeY=endY-startY;
+   				if(!main&&!set&&!end)
+   				{
+   					if(Math.abs(changeX)>=Math.abs(changeY))
+   					{
+   						if(changeX>0)
+   						{
+   							moveRight();
+   						}
+   						else
+   						{
+   							moveLeft();
+   						}
+   					}
+   					else
+   					{
+   						if(changeY>0)
+   						{
+   							moveDown();
+   						}
+   						else
+   						{
+   							moveUp();
+   						}
+   					}
+   					context.clearRect(0,0,width,height);
+        			scoreText.clearRect(0,0,scoreText.canvas.width,scoreText.canvas.height)
+        			gameDraw();
+        			scoreTextDraw(step,score);
+        			
+        			
 
+        			if(isGameOver())
+        				gameOver();
+        			else if(isWin())
+        				win();
+   				}
+   			});
    			
 
    			
 		}
+	    function moveUp()
+           {
+          	var arr=new Array();
+            for(let n=0;n<4;n++)
+            {
+                for(let i=0;i<4;i++)
+                    arr[i]=array[n][3-i];
+                arr=mergeBlock(arr);
+                for(let i=0;i<4;i++)
+                    array[n][3-i]=arr[i];
+            }
+                                        
+            if(lastArray!==array.toString())
+            {
+                randomBlock();
+                step++;
+            }
 
+        }
+        function moveDown()
+        {
+        	var arr=new Array();
+            for(let n=0;n<4;n++)
+            {
+                for(let i=0;i<4;i++)
+                    arr[i]=array[n][i];
+                arr=mergeBlock(arr);
+                for(let i=0;i<4;i++)
+                    array[n][i]=arr[i];
+            }
+                                        
+            if(lastArray!==array.toString())
+            {
+                randomBlock();
+                step++;
+            }
+        }
+        function moveLeft()
+        {
+        	var arr=new Array();
+            for(let n=0;n<4;n++)
+            {
+                for(let i=0;i<4;i++)
+                    arr[i]=array[3-i][n];
+                arr=mergeBlock(arr);
+                for(let i=0;i<4;i++)
+                    array[3-i][n]=arr[i];
+            }
+                                        
+            if(lastArray!==array.toString())
+            {
+                randomBlock();
+                step++;
+            }
+        }
+        function moveRight()
+        {
+        	var arr=new Array();
+            for(let n=0;n<4;n++)
+            {
+                for(let i=0;i<4;i++)
+                    arr[i]=array[i][n];
+                arr=mergeBlock(arr);
+                for(let i=0;i<4;i++)
+                    array[i][n]=arr[i];
+            }
+                                        
+            if(lastArray!==array.toString())
+            {
+                randomBlock();
+                step++;
+            }
+        }
 		function setMenu()
 		{
 			set=true;
