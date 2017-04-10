@@ -23,7 +23,9 @@
 			var set=false;
 			var keyUp='W',keyDown='S',keyLeft='A',keyRight='D';
 			var setW=false,setA=false,setD=false,setS=false;
+
 			var startX,startY,endX,endY;
+
 			{
 				var textHeight=scoreText.canvas.height;
 				var textWidth=scoreText.canvas.width;
@@ -97,6 +99,7 @@
     			key=[keyUp,keyDown,keyLeft,keyRight].indexOf(keychar)
     			if(key > -1&&end==false&&main==false)
     			{
+        			
         			if(key===0)
         			{
         				moveUp();
@@ -244,7 +247,7 @@
    				
    			}
 
-			document.addEventListener('touchstart',function(event)
+   			document.addEventListener('touchstart',function(event)
    			{
    				startX=event.touches[0].pageX;
    				startY=event.touches[0].pageY;
@@ -295,11 +298,10 @@
    				}
    			});
    			
-
-   			
 		}
-	    function moveUp()
-           {
+
+		function moveUp()
+        {
           	var arr=new Array();
             for(let n=0;n<4;n++)
             {
